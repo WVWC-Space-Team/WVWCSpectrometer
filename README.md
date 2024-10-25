@@ -1,1 +1,1 @@
-# WVWCSpectrometer - Hello!
+# WVWCSpectrometer
