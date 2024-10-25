@@ -1,10 +1,5 @@
-# WVWC Spectrometer
-## Abstract
-TODO: Type a description of the project here.
+#pragma once
 
-## Code
-### `SONYILX511`
-```
 class SONYILX511
 {
 public:
@@ -24,4 +19,3 @@ private:
     int integrationTime;                        // Integration time in ms; must be a mulitple of 10
     int clockSpeed;                             // Clock speed in Hz; max 2MHz, min 100Hz
 };
-```
