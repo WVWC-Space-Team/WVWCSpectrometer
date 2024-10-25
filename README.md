@@ -4,6 +4,7 @@ TODO: Type a description of the project here.
 
 ## Code
 ### `SONYILX511`
+- _Note that all modifying functions return `true` or `false` based on wether or not the function executed properly._
 ``` cpp
 class SONYILX511
 {
@@ -21,7 +22,7 @@ public:
 private:
     static const int MAX_CLOCK_SPEED = 2000000; // Maximum clock speed as per documentation; 2MHz
     static const int REQUIRED_CYCLES = 2088;    // Constant cycles to obtain all data as per ILX511 documentation
-    int integrationTime;                        // Integration time in ms; must be a mulitple of 10
+    int integrationTime;                        // Integration time in ms; must be a multiple of 10
     int clockSpeed;                             // Clock speed in Hz; max 2MHz, min 100Hz
 };
 ```
