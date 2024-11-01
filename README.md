@@ -4,7 +4,7 @@ TODO: Type a description of the project here.
 
 ## Code
 ### `SONYILX511`
-- _Note that all modifying functions return `true` or `false` based on wether or not the function executed properly._
+- _Note that all modifying functions return `true` or `false` based on whether or not the function executed properly._
 ``` cpp
 class SONYILX511
 {
