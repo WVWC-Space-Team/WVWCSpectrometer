@@ -1,0 +1,10 @@
+#include <opencv2/opencv.hpp>
+
+int imageProcessing(string a)
+{
+cv::Mat img = cv::imread(a);
+cv::cvtColor(img, img, cv::COLOR_BRG2GRAY);
+cv::imshow("result", img);
+cv::waitKey(0);
+return 0;
+};
