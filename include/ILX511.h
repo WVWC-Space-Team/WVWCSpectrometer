@@ -6,6 +6,7 @@ class SONYILX511
 public:
     // Constructor
     SONYILX511();
+    static const int MAX_INTENSITY_VALUE = 4095;
 
     // Set the integration time in term of ms; Must be a multiple of 10
     bool setIntegrationTime(int time_ms);
