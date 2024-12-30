@@ -1,6 +1,6 @@
 #include "ILX511.h"
 
-SONYILX511::SONYILX511(): integrationTime(10), clockSpeed(100000) {}
+SONYILX511::SONYILX511(picoBoard& board): boardClass(board), integrationTime(10), clockSpeed(100000) {}
 
 bool SONYILX511::setClockSpeed(int speed_hz)
 {
