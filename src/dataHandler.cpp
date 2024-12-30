@@ -6,45 +6,41 @@
 
 dataHandler::dataHandler(){}
 
-std::vector<uint16_t>* dataHandler::compressRLE(const std::vector<uint16_t>& data)
-{
-    std::vector<uint16_t>* compressedData = new std::vector<uint16_t>();
-    SONYILX511::MAX_INTENSITY_VALUE;
+std::vector<uint16_t> dataHandler::compressRLE(const std::vector<uint16_t>& data)
+{   
+    std::vector<uint16_t> compressedData;
+    compressedData.reserve(data.size());
+    
     uint16_t count = 0;
-    uint16_t value;
     uint16_t previousValue = 0;
-    // NOTE: All these uint16 are technically only 12 bits due to having
-    // a 12 bit ADC built into the XIAO RP2040.
-    for (const uint16_t& intensity : data)
+
+    for (size_t i = 0; i < data.size(); ++i)
     {
-        if (intensity < SONYILX511::MAX_INTENSITY_VALUE * ZERO_DEADZONE)
+        uint16_t intensity = data[i];
+        uint16_t value = (intensity < SONYILX511::MAX_INTENSITY_VALUE * ZERO_DEADZONE) ? 0 : intensity;
+
+        if (i == 0 || value < previousValue - COMPARE_DEADZONE || value > previousValue + COMPARE_DEADZONE)
         {
-            value = 0;
-        } else
-        {
-            value = intensity;
-        }
-        if (value > previousValue - COMPARE_DEADZONE && value < previousValue + COMPARE_DEADZONE)
-        {
-            count+= 1;
-        } else
-        {
-            if (count) // Takes care of instance where first value is 0
+            if (count > 0)
             {
-                compressedData->push_back(value);
-                compressedData->push_back(count);
-                count = 0;
+                compressedData.push_back(previousValue);
+                compressedData.push_back(count);
             }
+            previousValue = value;
+            count = 1;
+        } else
+        {
+            ++count;
         }
-    };
+    }
+
+    if (count > 0)
+    {
+        compressedData.push_back(previousValue);
+        compressedData.push_back(count);
+    }
 
     return compressedData;
-}
-
-bool dataHandler::checksumAmountOfSamples(std::vector<uint16_t>* compressedData)
-{
-    // Every second element is the count of times that value appears. The value should equal 2048.
-    // TODO: for every second element add value to count, if count 2048 return true else false
 }
 
 void dataHandler::updateZeroDeadzone(double newDeadzone)

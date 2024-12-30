@@ -7,7 +7,7 @@ class dataHandler
 public:
     dataHandler();
 
-    std::vector<uint16_t>* compressRLE(const std::vector<uint16_t>& data);
+    std::vector<uint16_t> compressRLE(const std::vector<uint16_t>& data);
     bool checksumAmountOfSamples(std::vector<uint16_t>* compressedData);
     void updateZeroDeadzone(double newDeadzone);
     void updateCompareDeadzone(int newDeadzone);
