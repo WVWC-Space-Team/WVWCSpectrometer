@@ -26,3 +26,11 @@ bool SONYILX511::setIntegrationTime(int time_ms)
         return false;
     };
 };
+
+void SONYILX511::transmitData()
+{
+    const uint8_t* dataToSend = reinterpret_cast<const uint8_t*>(DATA);
+    size_t dataSize = sizeof(DATA);
+
+    boardClass.sendData(dataToSend, dataSize);
+}
