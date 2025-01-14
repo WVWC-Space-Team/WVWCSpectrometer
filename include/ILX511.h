@@ -15,6 +15,7 @@ public:
     // Set the clock speed in hertz; Max 2MHz, Min 100Hz
     bool setClockSpeed(int speed_hz);
 
+    void transmitData();
 
 private:
     static const int MAX_CLOCK_SPEED = 2000000; // Maximum clock speed as per documentation; 2MHz
