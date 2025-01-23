@@ -36,7 +36,7 @@ class SensitivityOffset:
         self.MAX = 800
         self.SAMPLE_SIZE = 2048
      
-    def calculateSensitivitySlope(self)
+    def calculateSensitivitySlope(self):
         pass
 
     
