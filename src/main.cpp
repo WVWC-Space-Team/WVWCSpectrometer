@@ -1,18 +1,26 @@
-#include "pico/stdlib.h"
+#pragma once
+#include "./dataHandler.cpp"
+#include "./ILX511.cpp"
+#include "./picoBoard.cpp"
 
 int main()
 {
-    const int LED_PIN = 25;
-    gpio_init(LED_PIN);
-    gpio_set_dir(LED_PIN, GPIO_OUT);
+    // Initialization
+
+    picoBoard board;
+    board.init();
+
+    SONYILX511 sensor(board);
+    sensor.setClockSpeed(1000000); // 1MHz for rn
+    sensor.setIntegrationTime(100); // I still haven't quite decided how to use this
+
 
     while (true)
     {
-        gpio_put(LED_PIN, true);
-        sleep_ms(100);
-        gpio_put(LED_PIN, false);
-        sleep_ms(100);
-    };
+        // Capture data
 
-    return 0;
+        // Compress data
+
+        // Send data over UART
+    }
 }

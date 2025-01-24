@@ -17,6 +17,7 @@ private:
     static const int DEF_TX_PIN = 0;
     static const int DEF_RX_PIN = 1;
     static const int DEF_BAUD_RATE = 115200;
+    static const size_t PROTOCOL_SIZE = 2;
     uart_inst_t* uart0;
     static const uint8_t UART_HEADER[];
     static const uint8_t UART_FOOTER[];

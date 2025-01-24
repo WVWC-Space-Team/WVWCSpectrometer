@@ -22,6 +22,7 @@ void picoBoard::initUART(uart_inst_t* uartInstance, int baudRate)
 
 void picoBoard::sendData(const uint8_t* data, size_t length)
 {
-    // TODO: Add a header and footer 
+    uart_write_blocking(picoBoard::uart0, picoBoard::UART_HEADER, picoBoard::PROTOCOL_SIZE);
     uart_write_blocking(picoBoard::uart0, data, length);
+    uart_write_blocking(picoBoard::uart0, picoBoard::UART_FOOTER, picoBoard::PROTOCOL_SIZE);
 }
