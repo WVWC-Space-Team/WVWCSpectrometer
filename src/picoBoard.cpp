@@ -1,7 +1,11 @@
 #pragma once
 #include "picoBoard.h"
 
+const uint8_t picoBoard::UART_HEADER[] = {0xAA, 0xAA}; // TODO: Decide on a header and footer
+const uint8_t picoBoard::UART_FOOTER[] = {0xBB, 0xBB};
+
 picoBoard::picoBoard(){}
+
 
 void picoBoard::init()
 {
@@ -18,5 +22,6 @@ void picoBoard::initUART(uart_inst_t* uartInstance, int baudRate)
 
 void picoBoard::sendData(const uint8_t* data, size_t length)
 {
+    // TODO: Add a header and footer 
     uart_write_blocking(picoBoard::uart0, data, length);
 }
