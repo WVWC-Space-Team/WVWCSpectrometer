@@ -15,6 +15,8 @@ public:
     // Set the clock speed in hertz; Max 2MHz, Min 100Hz
     bool setClockSpeed(int speed_hz);
 
+    //
+
     void transmitData();
 
 private:

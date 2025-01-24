@@ -9,15 +9,24 @@ picoBoard::picoBoard(){}
 
 void picoBoard::init()
 {
-    initUART(picoBoard::uart0, 115200);
+    initPins(picoBoard::uart0, 115200);
 }
 
-void picoBoard::initUART(uart_inst_t* uartInstance, int baudRate)
+void picoBoard::initPins(uart_inst_t* uartInstance, int baudRate)
 {
     uart_init(uartInstance, baudRate);
 
     gpio_set_function(DEF_TX_PIN, GPIO_FUNC_UART);
     gpio_set_function(DEF_RX_PIN, GPIO_FUNC_UART);
+
+    adc_gpio_init(picoBoard::ILX511_OUTPUT_PIN);
+    adc_select_input(0); // Pin 26 in ADC0 per documentation
+}
+
+uint16_t picoBoard::readILX511()
+{
+    // Returns a value 0 -> 4095 based on incoming 0 - 3.3 volts
+    return adc_read();
 }
 
 void picoBoard::sendData(const uint8_t* data, size_t length)
