@@ -19,8 +19,19 @@ void picoBoard::initPins(uart_inst_t* uartInstance, int baudRate)
     gpio_set_function(DEF_TX_PIN, GPIO_FUNC_UART);
     gpio_set_function(DEF_RX_PIN, GPIO_FUNC_UART);
 
-    adc_gpio_init(picoBoard::ILX511_OUTPUT_PIN);
+    adc_gpio_init(picoBoard::ILX511_VOUT_PIN);
     adc_select_input(0); // Pin 26 in ADC0 per documentation
+
+    gpio_init(ILX511_ROG_PIN);
+    gpio_set_dir(ILX511_ROG_PIN, GPIO_OUT);
+}
+
+void picoBoard::startIntegrationTime(uint32_t integration_time)
+{
+    gpio_put(ILX511_ROG_PIN, 1);
+    sleep_us(10);
+    gpio_put(ILX511_ROG_PIN, 0);
+    sleep_ms(integration_time); // I just noticed my naming scheme is all over the place lol. Pascal, Cammel, Snake, etc
 }
 
 uint16_t picoBoard::readILX511()
@@ -29,9 +40,16 @@ uint16_t picoBoard::readILX511()
     return adc_read();
 }
 
-void picoBoard::sendData(const uint8_t* data, size_t length)
+void picoBoard::sendData(std::vector<uint16_t> data)
 {
+    const uint8_t* dataToSend = reinterpret_cast<const uint8_t*>(data.data());
+    size_t dataSize = data.size() * sizeof(uint16_t);
     uart_write_blocking(picoBoard::uart0, picoBoard::UART_HEADER, picoBoard::PROTOCOL_SIZE);
-    uart_write_blocking(picoBoard::uart0, data, length);
+    uart_write_blocking(picoBoard::uart0, dataToSend, dataSize);
     uart_write_blocking(picoBoard::uart0, picoBoard::UART_FOOTER, picoBoard::PROTOCOL_SIZE);
+}
+
+int picoBoard::getILX511ClockPin()
+{
+    return ILX511_CLOCK_PIN;
 }

@@ -14,13 +14,15 @@ int main()
     sensor.setClockSpeed(1000000); // 1MHz for rn
     sensor.setIntegrationTime(100); // I still haven't quite decided how to use this
 
+    dataHandler compressor;
+
+    std::vector<uint16_t> data;
+    std::vector<uint16_t> compressedData;
 
     while (true)
     {
-        // Capture data
-
-        // Compress data
-
-        // Send data over UART
+        data = sensor.collectData();
+        compressedData = compressor.compressRLE(data);
+        board.sendData(compressedData);
     }
 }
