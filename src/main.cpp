@@ -1,11 +1,19 @@
-#pragma once
-#include "./dataHandler.cpp"
-#include "./ILX511.cpp"
-#include "./picoBoard.cpp"
+#include <stdio.h>
+#include <string>
+
+#include "picoBoard.h"
+#include "ILX511.h"
+#include "dataHandler.h"
+
+#include "hardware/uart.h"
+#include "pico/stdlib.h"
 
 int main()
 {
     // Initialization
+    stdio_init_all();
+
+    sleep_ms(3000);
 
     picoBoard board;
     board.init();
@@ -21,8 +29,11 @@ int main()
 
     while (true)
     {
+        printf("Starting Data Collection\n");
         data = sensor.collectData();
-        compressedData = compressor.compressRLE(data);
-        board.sendData(compressedData);
+        printf("Finished Data Collection\n");
+        // compressedData = compressor.compressRLE(data);
+        board.sendData(data);
+        sleep_ms(5000);
     }
 }

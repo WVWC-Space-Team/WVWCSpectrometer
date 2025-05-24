@@ -1,6 +1,6 @@
-#pragma once
 #include "ILX511.h"
 #include <vector>
+#include <stdio.h>
 
 SONYILX511::SONYILX511(picoBoard& _board): board(_board), integrationTime(10), clockSpeed(100000) {}
 
@@ -13,6 +13,14 @@ std::vector<uint16_t> SONYILX511::collectData()
 
     int sleepTime = 1000000 / clockSpeed; // In useconds 
 
+    printf("sleepTime: %d\n", sleepTime);
+
+    if (sleepTime <= 0) {
+        printf("Error: clockSpeed must be positive\n");
+        return {};
+    }
+
+    printf("Skipping Dummy Beginning\n");
     for (int i = 0; i < DUMMY_PIXELS_START; i++)
     { // Skips the first dummy pixels
         gpio_put(clockPin, 1);
@@ -20,7 +28,8 @@ std::vector<uint16_t> SONYILX511::collectData()
         gpio_put(clockPin, 0);
         sleep_us(sleepTime/2);
     }
-
+    
+    printf("Starting collection\n");
     for (int i = 0; i < PIXEL_COUNT; i++)
     {
         gpio_put(clockPin, 1);
@@ -29,13 +38,14 @@ std::vector<uint16_t> SONYILX511::collectData()
         gpio_put(clockPin, 0);
         sleep_us(sleepTime/2);
     }
-
+    
+    printf("Skipping Dummy End\n");
     for (int i = 0; i < DUMMY_PIXELS_END; i++)
     { // Skips the end dummy pixels
         gpio_put(clockPin, 1);
         sleep_us(sleepTime/2);
         gpio_put(clockPin, 0);
-        sleep_us(sleepTime/2);
+        sleep_us(sleepTime/2);\
     }
     // TODO: Pin state is low at the end. Check if this is okay.
 

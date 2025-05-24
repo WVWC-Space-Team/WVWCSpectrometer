@@ -8,10 +8,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(PICO_EXAMPLES_PATH ${PROJECT_SOURCE_DIR})
 pico_sdk_init()
 
-add_executable(${PROJECT_NAME} ./src/main.cpp)
+include_directories(include)
+add_executable(${PROJECT_NAME} ./src/main.cpp ./src/picoBoard.cpp ./src/dataHandler.cpp ./src/ILX511.cpp)
 pico_add_extra_outputs(${PROJECT_NAME})
-target_link_libraries(${PROJECT_NAME} pico_stdlib pico_multicore)
+target_link_libraries(${PROJECT_NAME} pico_stdlib hardware_adc hardware_gpio hardware_pwm hardware_timer pico_multicore)
 
 # Enable USB, disable UART
-# pico_enable_stdio_usb(${PROJECT_NAME} 1)
-# pico_enable_stdio_uart(${PROJECT_NAME} 0)
+pico_enable_stdio_usb(${PROJECT_NAME} 1)
+pico_enable_stdio_uart(${PROJECT_NAME} 0)

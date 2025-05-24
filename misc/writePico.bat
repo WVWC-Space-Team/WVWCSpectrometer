@@ -1,0 +1,1 @@
+move ".\build\main.uf2" "D:\"

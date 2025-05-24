@@ -1,4 +1,3 @@
-#pragma once
 #include "dataHandler.h"
 #include "ILX511.h"
 #include <vector>

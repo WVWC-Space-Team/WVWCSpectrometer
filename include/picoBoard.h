@@ -1,9 +1,10 @@
 #pragma once
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
-#include "hardware/uart.h"
+// #include "hardware/uart.h"
 #include "hardware/pwm.h"
 #include <cstdint>
+#include <vector>
 
 class picoBoard
 {
@@ -12,8 +13,11 @@ public:
     void init();
 
     // UART Functions
-    void initPins(uart_inst_t* uartInstance, int baudRate);
-    void sendData(std::vector<uint16_t> data);
+    void initPins();
+    // void sendData(std::vector<uint16_t> data);
+
+    void sendData(const std::vector<uint16_t>& data);
+
     // ILX511 ADC Pin Reading
     uint16_t readILX511();
     void startIntegrationTime(uint32_t integrationTime);
@@ -27,8 +31,8 @@ private:
     static const int ILX511_CLOCK_PIN = 27; // TODO: CHECK!!
     static const int ILX511_ROG_PIN = 28; // TODO: CHECK!!
     static const int DEF_BAUD_RATE = 115200;
-    static const size_t PROTOCOL_SIZE = 2;
-    uart_inst_t* uart0;
+    static const size_t PROTOCOL_SIZE = 4;
+    uart_inst_t* uart_instance;
     static const uint8_t UART_HEADER[];
     static const uint8_t UART_FOOTER[];
 };

@@ -1,3 +1,5 @@
 .vscode
 build
 test.exe
+misc/output
+misc/__pycache__
