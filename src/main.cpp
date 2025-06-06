@@ -1,4 +1,4 @@
-#include <stdio.h>
+// #include <stdio.h>
 #include <string>
 
 #include "picoBoard.h"
@@ -29,11 +29,8 @@ int main()
 
     while (true)
     {
-        printf("Starting Data Collection\n");
         data = sensor.collectData();
-        printf("Finished Data Collection\n");
         // compressedData = compressor.compressRLE(data);
         board.sendData(data);
-        sleep_ms(5000);
     }
 }

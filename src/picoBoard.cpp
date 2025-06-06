@@ -34,12 +34,10 @@ void picoBoard::initPins()
 
 void picoBoard::startIntegrationTime(uint32_t integration_time)
 {
-    printf("Setting integration time\n");
     gpio_put(ILX511_ROG_PIN, 1);
     sleep_us(10);
     gpio_put(ILX511_ROG_PIN, 0);
     sleep_ms(integration_time); // I just noticed my naming scheme is all over the place lol. Pascal, Cammel, Snake, etc
-    printf("Integration time set\n");
 }
 
 uint16_t picoBoard::readILX511()
@@ -48,7 +46,7 @@ uint16_t picoBoard::readILX511()
     return adc_read();
 }
 
-// void picoBoard::sendData(std::vector<uint16_t> data)
+// void picoBoard::sendData(const std::vector<uint16_t>& data)
 // {
 //     const uint8_t* dataToSend = reinterpret_cast<const uint8_t*>(data.data());
 //     size_t dataSize = data.size() * sizeof(uint16_t);
@@ -60,11 +58,19 @@ uint16_t picoBoard::readILX511()
 
 void picoBoard::sendData(const std::vector<uint16_t>& data)
 {
-    printf("HEADER:");
-    for (uint16_t val : data) {
-        printf("%u,", val);
+    for (size_t i = 0; i < PROTOCOL_SIZE; ++i) {
+        putchar(UART_HEADER[i]);
     }
-    printf("FOOTER\n");
+
+    const uint8_t* dataToSend = reinterpret_cast<const uint8_t*>(data.data());
+    size_t dataSize = data.size() * sizeof(uint16_t);
+    for (size_t i = 0; i < dataSize; ++i) {
+        putchar(dataToSend[i]);
+    }
+
+    for (size_t i = 0; i < PROTOCOL_SIZE; ++i) {
+        putchar(UART_FOOTER[i]);
+    }
 }
 
 
