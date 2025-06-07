@@ -3,4 +3,5 @@ build
 test.exe
 misc/output
 misc/__pycache__
+misc/SerialPlotter/__pycache__
 misc/docs

@@ -34,9 +34,9 @@ void picoBoard::initPins()
 
 void picoBoard::startIntegrationTime(uint32_t integration_time)
 {
-    gpio_put(ILX511_ROG_PIN, 1);
+    gpio_put(ILX511_ROG_PIN, HIGH);
     sleep_us(10);
-    gpio_put(ILX511_ROG_PIN, 0);
+    gpio_put(ILX511_ROG_PIN, LOW);
     sleep_ms(integration_time); // I just noticed my naming scheme is all over the place lol. Pascal, Cammel, Snake, etc
 }
 

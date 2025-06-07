@@ -25,7 +25,7 @@ class SerialReader:
                 data = self.serialPort.read(self.serialPort.in_waiting) # Reads all current data in queue
                 tempBuffer.extend(data)
 
-            if len(tempBuffer) > 2048: 
+            if len(tempBuffer) > 4096:
                 self.queue.put(tempBuffer[:]) # Puts the new data in the queue to be processed by other threads
                 tempBuffer.clear()
             
